@@ -1,5 +1,6 @@
 # source venv/bin/activate
 
+import os
 from fastapi import FastAPI
 import requests
 import random
@@ -25,7 +26,8 @@ def translate(text):
 
 # Enviar Notificação
 def sendNotification(message):
-    envio = requests.post("https://ntfy.sh/gamma_morse_pico_w_8392x_receptor",data=message)
+    url = os.environ.get("PHONE_API_KEY")
+    envio = requests.post(url,data=message)
     return "Mensagem enviada" if envio.status_code == 200 else "Erro ao enviar"
 
 
@@ -39,7 +41,7 @@ def randomNumber(min, max):
 
 # GeckoCripto API
 def criptocurrency(currency):
-    API_KEY = "CG-wGn2iUDpcfF5wnCQZQnyyGtZ"
+    API_KEY = os.environ.get("COINGECKO_API_KEY")
     url = f"https://api.coingecko.com/api/v3/simple/price?vs_currencies=brl&symbols={currency}&x_cg_demo_api_key={API_KEY}"
     response = requests.get(url)
     valorMoeda = response.json()
@@ -62,7 +64,7 @@ def fetchDataCoordWeather(api, city):
     return lat, lon
 
 def fetchDataWeather(endpoint):
-    API_KEY = "8c96901fbda8bc56c883962a822a1863"
+    API_KEY = os.environ.get("OPENWEATHER_API_KEY")
 
     lat, lon = fetchDataCoordWeather(API_KEY, endpoint)
     
