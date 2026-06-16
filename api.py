@@ -42,7 +42,7 @@ def randomNumber(min, max):
 # GeckoCripto API
 def criptocurrency(currency):
     API_KEY = os.environ.get("COINGECKO_API_KEY")
-    url = f"https://api.coingecko.com/api/v3/simple/price?vs_currencies=brl&symbols={currency}&x_cg_demo_api_key={API_KEY}"
+    url = f"https://api.coingecko.com/api/v3/simple/price?vs_currencies=brl&symbols={currency.lower()}&x_cg_demo_api_key={API_KEY}"
     response = requests.get(url)
     valorMoeda = response.json()
     try:
@@ -100,7 +100,7 @@ def receiveMessage(messagePico: str = ""):
     message = ""
 
     match command.lower():
-        case "clima":
+        case "wtr":
             city = ""
             cont = 0
             for i in raspInput:
@@ -110,7 +110,7 @@ def receiveMessage(messagePico: str = ""):
 
             message = weather(city)
 
-        case "traduzir":
+        case "tlt":
             text = ""
             cont = 0
             for i in raspInput:
@@ -130,12 +130,12 @@ def receiveMessage(messagePico: str = ""):
 
             message = sendNotification(text)
 
-        case "cripto":
+        case "cpt":
             currency = raspInput[1]
 
             message = criptocurrency(currency)
 
-        case "dado":
+        case "rdm":
             min = int(raspInput[1])
             max = int(raspInput[2])
 
